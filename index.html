@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todo Plan</title>
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 18px;
+        }
+
+        .align {
+            display: grid;
+            grid-template-columns: 10% 75% 15%;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .todo-plan,
+        .todo-input {
+            display: grid;
+            grid-template-columns: 500px 300px 150px;
+            align-items: center;
+            column-gap: 50px;
+            row-gap: 20px;
+        }
+
+        .todo-input {
+            margin-bottom: 30px;
+            align-items: stretch;
+        }
+
+        .todo-things,
+        .due-date {
+            font-size: 18px;
+            padding: 8px 0px;
+        }
+
+        .add {
+            background-color: rgb(48, 187, 141);
+            color: white;
+            font-size: 25px;
+            border: none;
+            border-radius: 13px;
+            cursor: pointer;
+        }
+
+        .delete {
+            background-color: rgb(239, 71, 71);
+            color: white;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            font-size: 25px;
+            border: none;
+            border-radius: 13px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h3 class="heading">Todo Planner</h3>
+    <div class="align">
+        <div></div>
+        <div class="todo-input">
+            <input class="todo-things" placeholder="Enter your plan">
+            <input class="due-date" type="date">
+            <button class="add" onclick="
+              planUpdate();">
+                Add
+            </button>
+        </div>
+        <div></div>
+    </div>
+    <div class="align">
+        <div></div>
+        <div class="todo-plan"></div>
+        <div></div>
+    </div>
+
+    <script>
+        const todoList = [];
+        function renderPage() {
+            let html = '';
+            for (let i = 0; i < todoList.length; i++) {
+                html += `
+                <div>${todoList[i].plan} </div> 
+                <div>${todoList[i].date} </div>
+                    <button class="delete" onclick=" todoList.splice(${i},1); renderPage();">
+                        Delete
+                    </button>`;
+            }
+
+            document.querySelector('.todo-plan').innerHTML = html;
+        }
+
+        function planUpdate() {
+            const plan = document.querySelector('.todo-things');
+            const date = document.querySelector('.due-date');
+            todoList.push({ plan: plan.value, date: date.value });
+            plan.value = '';
+            date.value = '';
+            renderPage();
+        }
+    </script>
+</body>
+
+
+</html>
